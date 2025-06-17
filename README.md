@@ -3,6 +3,8 @@
 
 This project is a web-based summarizer designed to generate concise summaries from research papers (PDF files). It leverages powerful transformer models like **PEGASUS** or **DistilBERT** to extract and summarize content.
 
+This project was developed as a case study to demonstrate the effective application of pre-trained transformer models in solving domain-specific tasks like research paper summarization. It showcases how models like PEGASUS and DistilBERT can be fine-tuned or adapted to deliver high-quality, task-specific NLP solutions in real-world scenarios.
+
 ---
 
 ## ✔ Features
@@ -10,7 +12,8 @@ This project is a web-based summarizer designed to generate concise summaries fr
 - Upload and parse research paper PDFs
 - Summarize content using fine-tuned NLP models
 - Clean and readable interface
-- Fast backend powered by Python and deep learning
+- Efficient backend and pre-trained transformer models
+
 
 ---
 
