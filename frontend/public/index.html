@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Paper Summarizer & Citation Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    input[type="file"], textarea, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .output {
+      margin-top: 20px;
+    }
+    .output h3 {
+      margin-bottom: 5px;
+      color: #444;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 15px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI Paper Summarizer & Citation Generator</h1>
+
+    <form id="uploadForm">
+      <input type="file" id="fileInput" accept=".pdf,.txt" required />
+      <button type="submit">Summarize & Generate Citations</button>
+    </form>
+
+    <div class="output">
+      <h3>Summary:</h3>
+      <pre id="summaryOutput">No summary yet.</pre>
+
+      <h3>Citations:</h3>
+      <pre id="citationOutput">No citations yet.</pre>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const fileInput = document.getElementById('fileInput');
+    const summaryOutput = document.getElementById('summaryOutput');
+    const citationOutput = document.getElementById('citationOutput');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const file = fileInput.files[0];
+      if (!file) return alert('Please select a file.');
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      summaryOutput.textContent = 'Processing...';
+      citationOutput.textContent = '';
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/summarize', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          summaryOutput.textContent = result.summary || 'No summary generated.';
+          citationOutput.textContent = result.citations || 'No citations generated.';
+        } else {
+          summaryOutput.textContent = 'Error: ' + (result.detail || 'Something went wrong.');
+        }
+      } catch (error) {
+        summaryOutput.textContent = 'Error: ' + error.message;
+      }
+    });
+  </script>
+  <script src="index.js"></script>
+
+</body>
+</html>

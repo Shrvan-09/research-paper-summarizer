@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+transformers
+torch
+PyMuPDF
+keybert
+scikit-learn
+sentence-transformers
